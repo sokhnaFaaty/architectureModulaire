@@ -3,15 +3,19 @@
 import {
     modalDelete, modalDeleteDesc, modalDeleteCancel, modalDeleteConfirm,
     modalDeleteMulti, modalDeleteMultiDesc, modalDeleteMultiCancel, modalDeleteMultiConfirm,
-    contactList, selectAllChk, deleteSelBtn, selCountEl,
+    contactList, selectAllChk, deleteSelBtn, selCountEl,    editIdInput,
+
 } from "../DOM/elements.js";
 import { showToast } from "./messageRenderer.js";
 import {
     selectedIds, pendingDeleteId, setPendingDeleteId,
-    getFiltered, getPageSlice,
     deleteContact, deleteContacts, getContactById,
-    renderList, setCurrentPage,
+    resetForm
 } from "../services/contactServices.js";
+import{
+    renderList, setCurrentPage,getFiltered, getPageSlice,getTotalPages
+
+}from "../UI/pagination.js"
 
 // HELPERS MODAL
 
@@ -27,12 +31,12 @@ export function closeModal(overlay) { overlay.classList.remove("open"); }
 
 // SÉLECTION
 
-export function updateSelectionUI() {
+export async function updateSelectionUI() {
     const count = selectedIds.size;
     selCountEl.textContent = count;
     deleteSelBtn.disabled  = count < 3;
 
-    const visibleIds = getPageSlice(getFiltered()).map((c) => c.id);
+    const visibleIds = getPageSlice(await getFiltered()).map((c) => c.id);
     const allChecked = visibleIds.length > 0 && visibleIds.every((id) => selectedIds.has(id));
     selectAllChk.checked       = allChecked;
     selectAllChk.indeterminate = !allChecked && visibleIds.some((id) => selectedIds.has(id));
@@ -42,7 +46,7 @@ export function updateSelectionUI() {
 contactList.addEventListener("change", (e) => {
     const chk = e.target.closest(".card-checkbox");
     if (!chk) return;
-    const id = Number(chk.dataset.id);
+    const id = String(chk.dataset.id);
     if (chk.checked) selectedIds.add(id);
     else             selectedIds.delete(id);
 
@@ -51,11 +55,11 @@ contactList.addEventListener("change", (e) => {
 });
 
 // "Tout sélectionner" — uniquement la page courante
-selectAllChk.addEventListener("change", () => {
-    const visibleIds = getPageSlice(getFiltered()).map((c) => c.id);
+selectAllChk.addEventListener("change",async () => {
+    const visibleIds = getPageSlice(await getFiltered()).map((c) => c.id);
     if (selectAllChk.checked) visibleIds.forEach((id) => selectedIds.add(id));
     else                      visibleIds.forEach((id) => selectedIds.delete(id));
-    renderList();
+    await renderList();
 });
 
 // SUPPRESSION GROUPÉE
@@ -70,13 +74,13 @@ deleteSelBtn.addEventListener("click", () => {
 
 modalDeleteMultiCancel.addEventListener("click", () => closeModal(modalDeleteMulti));
 
-modalDeleteMultiConfirm.addEventListener("click", () => {
+modalDeleteMultiConfirm.addEventListener("click",async () => {
     const count = selectedIds.size;
-    deleteContacts(new Set(selectedIds));
+    await deleteContacts(new Set(selectedIds));
     selectedIds.clear();
     closeModal(modalDeleteMulti);
     setCurrentPage(1);
-    renderList();
+   await renderList();
     showToast("danger", "Contacts supprimés", `${count} contacts ont été supprimés.`);
 });
 
@@ -87,21 +91,19 @@ modalDeleteCancel.addEventListener("click", () => {
     setPendingDeleteId(null);
 });
 
-modalDeleteConfirm.addEventListener("click", () => {
-    // Lire pendingDeleteId depuis le module services (valeur courante)
-    import("../services/contactServices.js").then(({ pendingDeleteId: pid, resetForm, editIdInput }) => {
+modalDeleteConfirm.addEventListener("click",async () => {
+    const pid =pendingDeleteId;
         if (!pid) return;
-        const contact = getContactById(pid);
+        const contact = await getContactById(pid);
         const name    = contact ? `${contact.firstName} ${contact.lastName}` : "le contact";
-        deleteContact(pid);
+        await deleteContact(pid);
         selectedIds.delete(pid);
 
         // Si on supprimait la carte en cours d'édition → reset formulaire
-        if (Number(editIdInput.value) === pid) resetForm();
+        if (String(editIdInput.value) === pid) resetForm();
 
         setPendingDeleteId(null);
         closeModal(modalDelete);
-        renderList();
+        await renderList();
         showToast("danger", "Contact supprimé", `${name} a été supprimé avec succès.`);
     });
-});
