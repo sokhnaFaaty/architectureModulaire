@@ -1,0 +1,20 @@
+{
+  "name": "baseContact",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "gueye": "npx json-server faty.json",
+        "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.15"
+  },
+  "devDependencies": {
+    "vite": "^8.0.13"
+  }
+}

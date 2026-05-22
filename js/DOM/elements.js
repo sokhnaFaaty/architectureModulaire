@@ -1,6 +1,5 @@
 // ── Éléments DOM 
-// Ce fichier n'importe RIEN. Il exporte uniquement des références DOM.
-// Tous les autres modules importent depuis ici.
+
 
 export const editIdInput      = document.getElementById("editId");
 export const form             = document.getElementById("contactForm");
@@ -31,3 +30,5 @@ export const modalDeleteMulti        = document.getElementById("modalDeleteMulti
 export const modalDeleteMultiDesc    = document.getElementById("modalDeleteMultiDesc");
 export const modalDeleteMultiCancel  = document.getElementById("modalDeleteMultiCancel");
 export const modalDeleteMultiConfirm = document.getElementById("modalDeleteMultiConfirm");
+
+

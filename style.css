@@ -902,3 +902,41 @@ select {
         margin-left: 0;
     }
 }
+/* ── PAGE DE LOGIN ─────────────────────────── */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: 16px;
+}
+.login-header { margin-bottom: 2rem; }
+.login-sub    { margin-top: .5rem; opacity: .6; font-size: .9rem; }
+
+/* ── HEADER AVEC DÉCONNEXION ───────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 2rem;
+  border-bottom: 1px solid var(--border, #e5e5e5);
+}
+.header-right  { display: flex; align-items: center; gap: 1rem; }
+.header-user   { font-size: .9rem; opacity: .7; }
+.btn-logout {
+  padding: .4rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: .85rem;
+  color: #e74c3c;
+}
+.btn-logout:hover { background: rgba(231, 76, 60, .08); }

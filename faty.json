@@ -1,0 +1,53 @@
+{
+  "contacts": [
+    {
+      "firstName": "Sokhna",
+      "lastName": "Gueye",
+      "email": "mamefat2004@gmail.com",
+      "phone": "787887767",
+      "role": "Développeur",
+      "createdAt": "09 mai 2026",
+      "id": "RmSYXbSO4js"
+    },
+    {
+      "firstName": "Aminata",
+      "lastName": "Diouf",
+      "email": "aminatadiouf@gmail.com",
+      "phone": "787878788",
+      "role": "Designer",
+      "createdAt": "09 mai 2026",
+      "id": "MjA0VCdYf2E"
+    },
+    {
+      "firstName": "Aicha",
+      "lastName": "Ly",
+      "email": "lyaicha@gmail.com",
+      "phone": "789087887",
+      "role": "Client",
+      "createdAt": "09 mai 2026",
+      "id": "zphduA-S6Lk"
+    },
+    {
+      "firstName": "ndeye Galass",
+      "lastName": "Diagne",
+      "email": "galass@gmail.com",
+      "phone": "777898978",
+      "role": "Développeur",
+      "createdAt": "13 mai 2026",
+      "id": "e7qlnmrQG9U"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "login": "nexusDev",
+      "password": "ubuntu"
+    },
+    {
+      "id": "2",
+      "login": "gratefulFaty",
+      "password": "grateful"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
